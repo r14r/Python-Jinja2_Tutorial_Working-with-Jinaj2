@@ -1,0 +1,31 @@
+{# EXTRACT BLOCK VALUES #}
+{% set comments %}{% block comments %}{% endblock %}{% endset -%}
+{% set name %}{% block name %}{% endblock %}{% endset %}
+{% set parameters %}{% block parameters %}{% endblock %}{% endset %}
+{% set logic %}{% block logic %}{% endblock %}{% endset -%}
+
+-- **STORED PROCEDURE DEBUGGING**
+-- {{ name|trim }}
+
+{# COMMENTS & MODIFIERS #}
+{% include "jst/mssql/_controls.sql.jinja" -%}
+
+{# DECLARE PARAMETERS #}
+{% if parameters -%}
+-- PARAMETERS =================================================================
+DECLARE
+	{% for param in parameters.split(",") %}
+	{% if "OUTPUT" in param|upper %}
+	{{ param|upper|replace("OUTPUT", "")|trim }}{%- if loop.last %};{% else %},{% endif %} -- OUTPUT
+
+	{% else %}
+	{{ param.split("=")|first|trim }} = {{ param|columntovalue(presets) }}{%- if loop.last %};{% else %},{% endif %}
+
+	{% endif %}
+	{% endfor %}
+{% endif %}
+
+-- LOGIC ======================================================================
+	{{ logic|trim }}
+
+GO

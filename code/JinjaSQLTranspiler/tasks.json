@@ -1,0 +1,138 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "JST: Set Options",
+			"type": "shell",
+			"command": "${config:python.pythonPath}",
+			"args": [
+				"jinjasqltranspiler\\jinjasqltranspiler.py",
+				"set_options",
+				"${workspaceFolder}",
+				"-t", "${input:jst_templates_dir}",
+				"-p", "${input:jst_transpiled_dir}",
+				"-d", "${input:jst_debug_dir}",
+				"-n", "${input:jst_ansi_nulls}",
+				"-q", "${input:jst_quoted_id}",
+				"-s", "${input:jst_skip_prefixes}"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "JST"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "JST: Transpile Current File",
+			"type": "shell",
+			"command": "${config:python.pythonPath}",
+			"args": [
+				"jinjasqltranspiler\\jinjasqltranspiler.py",
+				"transpile_file",
+				"${workspaceFolder}",
+				"${file}",
+				"${input:jst_formats}"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "JST"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "JST: Debug Current File",
+			"type": "shell",
+			"command": "${config:python.pythonPath}",
+			"args": [
+				"jinjasqltranspiler\\jinjasqltranspiler.py",
+				"transpile_file",
+				"${workspaceFolder}",
+				"${file}",
+				"Debug"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "JST"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "JST: Transpile Project",
+			"type": "shell",
+			"command": "${config:python.pythonPath}",
+			"args": [
+				"jinjasqltranspiler\\jinjasqltranspiler.py",
+				"transpile_project",
+				"${workspaceFolder}",
+				"${input:jst_formats}"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "JST"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "JST: Parameter Presets",
+			"type": "shell",
+			"command": "${config:python.pythonPath}",
+			"args": [
+				"jinjasqltranspiler\\jinjasqltranspiler.py",
+				"parameter_presets",
+				"${workspaceFolder}"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "JST"
+			},
+			"problemMatcher": []
+		}
+	],
+	"inputs": [
+		{
+			"id": "jst_templates_dir",
+			"type": "promptString",
+			"description": "Path to input directory for Jinja templates.",
+			"default": "templates"
+		},
+		{
+			"id": "jst_transpiled_dir",
+			"type": "promptString",
+			"description": "Path to output directory for transpiled files.",
+			"default": "transpiled"
+		},
+		{
+			"id": "jst_debug_dir",
+			"type": "promptString",
+			"description": "Path to output directory for debugging files.",
+			"default": "debug"
+		},
+		{
+			"id": "jst_ansi_nulls",
+			"type": "pickString",
+			"description": "Whether to explicitly enable ANSI-NULLS in transpiled code.",
+			"options": ["True", "False"],
+			"default": "True"
+		},
+		{
+			"id": "jst_quoted_id",
+			"type": "pickString",
+			"description": "Whether to explicitly enable quoted identifiers in transpiled code.",
+			"options": ["True", "False"],
+			"default": "True"
+		},
+		{
+			"id": "jst_skip_prefixes",
+			"type": "promptString",
+			"description": "Comma-separated list of filename prefixes to skip.",
+			"default": "ext,part"
+		},
+		{
+			"id": "jst_formats",
+			"type": "pickString",
+			"description": "Format used when transpiling.",
+			"options": ["None", "Create", "Replace"],
+			"default": "None"
+		}
+	]
+}

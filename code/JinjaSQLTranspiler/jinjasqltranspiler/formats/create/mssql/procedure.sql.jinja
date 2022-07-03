@@ -1,0 +1,19 @@
+{# EXTRACT BLOCK VALUES #}
+{% set comments %}{% block comments %}{% endblock %}{% endset -%}
+{% set name %}{% block name %}{% endblock %}{% endset %}
+{% set parameters %}{% block parameters %}{% endblock %}{% endset %}
+{% set logic %}{% block logic %}{% endblock %}{% endset -%}
+
+{# COMMENTS & MODIFIERS #}
+{% include "jst/mssql/_controls.sql.jinja" -%}
+
+{# CREATE PROCEDURE #}
+CREATE PROCEDURE {{ name|trim }}{% if parameters %}(
+{{ parameters }}){% endif %} AS
+BEGIN
+	SET NOCOUNT ON;
+
+	{{ logic|trim }}
+
+END;
+GO

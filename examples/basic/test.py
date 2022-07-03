@@ -19,9 +19,7 @@ env = Environment(
 <title>{{ title }}</title>
 {% block body %}{% endblock %}
 """,
-            "helpers.html": """\
-{% macro conspirate() %}23{% endmacro %}
-""",
+            "helpers.html": "{% macro conspirate() %}23{% endmacro %}"
         }
     )
 )

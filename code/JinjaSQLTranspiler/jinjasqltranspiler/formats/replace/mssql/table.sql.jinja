@@ -1,0 +1,16 @@
+{# EXTRACT BLOCK VALUES #}
+{% set comments %}{% block comments %}{% endblock %}{% endset -%}
+{% set name %}{% block name %}{% endblock %}{% endset %}
+{% set columns %}{% block columns %}{% endblock %}{% endset -%}
+
+{# COMMENTS & MODIFIERS #}
+{% include "jst/mssql/_controls.sql.jinja" -%}
+
+{# DROP TABLE #}
+DROP TABLE {{ name|trim }};
+
+{# CREATE TABLE #}
+CREATE TABLE {{ name|trim }} (
+	{{ columns|trim }});
+
+GO
